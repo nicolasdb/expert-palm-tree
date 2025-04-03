@@ -11,7 +11,6 @@ services:
       - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
       - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
       - N8N_SECURE_COOKIE=false
-
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=supabase-db
       - DB_POSTGRESDB_PORT=5432
@@ -20,8 +19,11 @@ services:
       - DB_POSTGRESDB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
     volumes:
       - n8n_data:/home/node/.n8n
+      - /home/nicolas:/home/node/init  # Mount the local directory to the container directory
     depends_on:
       - supabase-db
+    command: >
+      /bin/sh -c "n8n import:workflow --input /home/node/init/workflow.json && n8n start"
 
   supabase-db:
     image: postgres:15-alpine  # Use the official Postgres image
