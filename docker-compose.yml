@@ -22,8 +22,8 @@ services:
       - /home/nicolas:/home/node/init  # Mount the local directory to the container directory
     depends_on:
       - supabase-db
-    command: >
-      /bin/sh -c "n8n import:workflow --input /home/node/init/workflow.json && n8n start"
+    # command: >
+    #   /bin/sh -c "n8n import:workflow --input /home/node/init/workflow.json && n8n start"
 
   supabase-db:
     image: postgres:15-alpine  # Use the official Postgres image
